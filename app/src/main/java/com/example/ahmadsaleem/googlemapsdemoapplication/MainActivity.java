@@ -13,6 +13,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -61,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
     mGoogleMap= googleMap;
+    //mGoogleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        MapStyleOptions style=MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_night);
+        mGoogleMap.setMapStyle(style);
     goToLocationZoom(39.008225, -76.8984527,15);
     }
 
