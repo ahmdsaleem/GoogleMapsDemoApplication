@@ -1,6 +1,8 @@
 package com.example.ahmadsaleem.googlemapsdemoapplication;
 
 import android.app.Dialog;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -19,53 +21,46 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     GoogleMap mGoogleMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(googleServicesAvailable())
-        {
-            Toast.makeText(this,"Success",Toast.LENGTH_SHORT).show();
+        if (googleServicesAvailable()) {
+            Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
             setContentView(R.layout.activity_main);
             initMap();
-        }
-        else
-        {
+        } else {
             //services not found view
         }
     }
 
     private void initMap() {
-        MapFragment mapFragment= (MapFragment) getFragmentManager().findFragmentById(R.id.activity_main_mapFragment);
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.activity_main_mapFragment);
         mapFragment.getMapAsync(this);
     }
 
 
-    public boolean googleServicesAvailable()
-    {
+    public boolean googleServicesAvailable() {
         GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
         int isAvailable = googleApiAvailability.isGooglePlayServicesAvailable(this);
-        if(isAvailable==ConnectionResult.SUCCESS)
-        {
+        if (isAvailable == ConnectionResult.SUCCESS) {
             return true;
-        }
-        else if(googleApiAvailability.isUserResolvableError(isAvailable))
-        {
-            Dialog dialog=googleApiAvailability.getErrorDialog(this,isAvailable,0);
+        } else if (googleApiAvailability.isUserResolvableError(isAvailable)) {
+            Dialog dialog = googleApiAvailability.getErrorDialog(this, isAvailable, 0);
             dialog.show();
-        }
-        else {
-            Toast.makeText(this,"Cant Connect to Play Services",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Cant Connect to Play Services", Toast.LENGTH_SHORT).show();
         }
         return false;
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-    mGoogleMap= googleMap;
-    //mGoogleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        MapStyleOptions style=MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_night);
+        mGoogleMap = googleMap;
+        //mGoogleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        MapStyleOptions style = MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_night);
         mGoogleMap.setMapStyle(style);
-    goToLocationZoom(39.008225, -76.8984527,15);
+        goToLocationZoom(39.008225, -76.8984527,15);
     }
 
     private void goToLocation(double lat, double lng) {
